@@ -45,13 +45,24 @@ public class IntraDayStrategy extends Nifty30 {
 			
 			int index = 0;
 			int tradeCount = 0;
+//			float stopLoss = 0.35f/100f*low;
+//			float stopLoss = Math.round(stopLoss);
+			float stopLoss = 30;
 			for (CandleStickData candleStickData : intraDayList) {
 				if (prevDayList == null)
 				{
 					continue;
 				}
 				
-				List<CandleStickData> subList = new ArrayList<CandleStickData>(prevDayList.subList(prevDayList.size()-24, prevDayList.size()));
+				List<CandleStickData> subList = null;
+				if (prevDayList.size() < 24 ){
+					System.out.println("Problem");
+					subList = prevDayList;
+				} else {
+					subList = new ArrayList<CandleStickData>(prevDayList.subList(prevDayList.size()-24, prevDayList.size()));
+				}
+				
+//				List<CandleStickData> subList = new ArrayList<CandleStickData>(prevDayList.subList(prevDayList.size()-24, prevDayList.size()));
 				
 				float channelMax = -1;
 				float channelMin = 99999;
@@ -135,9 +146,11 @@ public class IntraDayStrategy extends Nifty30 {
 					
 				}
 //				prevDayList.add(candleStickData);
+
 				index++;
 				if( index > 36 )
 				{
+					candleStickData.getTs();
 					if( currentTrade != null)
 					{
 						

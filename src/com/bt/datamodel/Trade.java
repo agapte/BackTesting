@@ -8,6 +8,7 @@ public abstract class  Trade {
 	float maxProfit = -1;
 	String buyTs = "";
 	String sellTs = "";
+	public static int SLIPPAGE = 5;
 	
 	public Trade() {
 	}
@@ -58,7 +59,7 @@ public abstract class  Trade {
 	{
 		if( sellPrice > -1 && buyPrice > -1)
 		{
-			return sellPrice-buyPrice-5;
+			return sellPrice-buyPrice-SLIPPAGE;
 		}
 		return 0;
 	}

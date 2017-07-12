@@ -23,6 +23,7 @@ public class BNIntraDayStrategy extends BankNifty30 {
 	}
 	
 	public static void main(String[] args) {
+		Trade.SLIPPAGE = 9;
 		BNIntraDayStrategy strategy = new BNIntraDayStrategy();
 		strategy.setPeriodicity(1);
 		strategy.initData();

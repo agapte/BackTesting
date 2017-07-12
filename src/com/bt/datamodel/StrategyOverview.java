@@ -11,6 +11,8 @@ public class StrategyOverview {
 	
 	List<Trade> tradeList = new ArrayList<>();
 	
+	ArrayList<Float> drawDownList = new ArrayList<Float>();
+	
 	public StrategyOverview() {
 	}
 	
@@ -90,7 +92,7 @@ public class StrategyOverview {
 	public float getMaxDrawdown()
 	{
 		StringBuilder profitData = new StringBuilder();
-		ArrayList<Float> drawDownList = new ArrayList<Float>();
+		
 		float maxProfit = 0;
 		float totalProfit = 0;
 		float maxDrawdown = 0;
@@ -114,6 +116,35 @@ public class StrategyOverview {
 		}
 //		System.out.println(profitData);
 		return maxDrawdown;
+	}
+	
+	public float getCurrentDrawdown()
+	{
+		StringBuilder profitData = new StringBuilder();
+		ArrayList<Float> drawDownList = new ArrayList<Float>();
+		float maxProfit = 0;
+		float totalProfit = 0;
+		float maxDrawdown = 0;
+		for (Trade trade : tradeList) {
+			totalProfit += trade.getProfit();
+			String ts = trade.getSellTs();
+			if(trade.getTradeType().equals("SHORT"))
+			{
+				ts = trade.getBuyTs();
+			}
+			profitData.append(ts + "," + totalProfit+"\n");
+			if(totalProfit > maxProfit)
+			{
+				maxProfit = totalProfit;
+			}
+			drawDownList.add(maxProfit - totalProfit);
+			if(maxDrawdown < (maxProfit - totalProfit))
+			{
+				maxDrawdown = maxProfit - totalProfit;
+			}
+		}
+//		System.out.println(profitData);
+		return maxProfit - totalProfit;
 	}
 	
 	public float getPercentProfitable()
@@ -290,17 +321,17 @@ public class StrategyOverview {
 			if( trade.getProfit() > 0)
 			{
 				consProfCount++;
-				if ( consLossCount > maxConsLossCount)
+				if ( consProfCount > maxConsProfCount)
 				{
-					maxConsLossCount = consLossCount;
+					maxConsProfCount = consProfCount;
 				}
 				consLossCount = 0;
 			} else
 			{
 				consLossCount++;
-				if ( consProfCount > maxConsProfCount)
+				if ( consLossCount > maxConsLossCount)
 				{
-					maxConsProfCount = consProfCount;
+					maxConsLossCount = consLossCount;
 				}
 				consProfCount = 0;
 			}
@@ -323,10 +354,13 @@ public class StrategyOverview {
 		stringBuffer.append("\tAvg   Short          " + getShortProfit()/getShortTrades());
 		stringBuffer.append("\tMax   Loss           " + getMaxLoss());
 		stringBuffer.append("\nmax drawdown         " + getMaxDrawdown());
+		stringBuffer.append("\nCurrent drawdown     " + getCurrentDrawdown());
 		stringBuffer.append("\nmax cons loss        " + maxConsLossCount);
 		stringBuffer.append("\nmax cons Profit      " + maxConsProfCount);
 		stringBuffer.append("\nAvg Win Trade        " + getAverageWinningTrade());
 		stringBuffer.append("\tAvg Loss Trade       " + getAverageLosingTrade());
+		stringBuffer.append("\n");
+		stringBuffer.append(drawDownList);
 		return stringBuffer.toString();
 	}
 
