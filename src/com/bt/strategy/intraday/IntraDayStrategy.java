@@ -86,9 +86,7 @@ public class IntraDayStrategy extends Nifty30 {
 				float low = candleStickData.getmLow();
 				float open = candleStickData.getmOpen();
 				String ts = candleStickData.getTs();
-				float stopLoss = 0.35f/100f*low;
-				stopLoss = Math.round(stopLoss);
-				stopLoss = 30;
+				
 								
 				if( index ==0)
 				{
