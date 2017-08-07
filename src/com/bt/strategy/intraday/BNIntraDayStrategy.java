@@ -50,7 +50,7 @@ public class BNIntraDayStrategy extends BankNifty30 {
 			int index = 0;
 			int tradeCount = 0;
 			for (CandleStickData candleStickData : intraDayList) {
-				if (prevDayList == null)
+				if (prevDayList == null || prevDayList.size() < 24)
 				{
 					continue;
 				}
