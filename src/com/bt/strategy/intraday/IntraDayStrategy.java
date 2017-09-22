@@ -60,6 +60,8 @@ public class IntraDayStrategy extends Nifty30 {
 //			float stopLoss = 0.35f/100f*low;
 //			float stopLoss = Math.round(stopLoss);
 			float stopLoss = 30;
+			float longDelta = 25;
+			float shortDelta = 20;
 			for (CandleStickData candleStickData : intraDayList) {
 				if (prevDayList == null)
 				{
@@ -89,7 +91,6 @@ public class IntraDayStrategy extends Nifty30 {
 				float open = candleStickData.getmOpen();
 				String ts = candleStickData.getTs();
 				
-								
 				if( index ==0)
 				{
 					index++;
@@ -97,10 +98,10 @@ public class IntraDayStrategy extends Nifty30 {
 				}
 				if ( currentTrade == null && index < 6 && tradeCount < 1 )
 				{
-					if ( high > channelMax + 25)
+					if ( high > channelMax + longDelta)
 					{
-						float price = channelMax + 25;
-						if( open > channelMax + 25)
+						float price = channelMax + longDelta;
+						if( open > channelMax + longDelta)
 						{
 							price = open;
 						}
@@ -108,10 +109,10 @@ public class IntraDayStrategy extends Nifty30 {
 						tradeCount++;
 						
 					} 
-					else if (low < channelMin-20)
+					else if (low < channelMin-shortDelta)
 					{
-						float price = channelMin - 20;
-						if( open < channelMin - 20)
+						float price = channelMin - shortDelta;
+						if( open < channelMin - shortDelta)
 						{
 							price = open;
 						}

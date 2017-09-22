@@ -228,6 +228,7 @@ public class StrategyOverview {
 	
 	public void getMonthlyProfits()
 	{
+		
 		Map<String, Float> profitMap = new TreeMap<String, Float>();
 		for (Trade trade : tradeList) {
 			String ts = trade.getSellTs();
@@ -248,9 +249,14 @@ public class StrategyOverview {
 			float1 += trade.getProfit();
 			profitMap.put(substring, float1);
 		}
+		float cumProfit = 0;
 		for (Entry<String, Float> entry : profitMap.entrySet()) {
-			
-			System.out.println(entry.getKey() + " " + entry.getValue());
+			cumProfit += entry.getValue();
+			System.out.println(entry.getKey() + " " + entry.getValue() + " " + cumProfit);
+			if (entry.getKey().endsWith("12") )
+			{
+				cumProfit = 0;
+			}
 		}
 	}
 	

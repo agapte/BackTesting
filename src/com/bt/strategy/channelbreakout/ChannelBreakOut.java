@@ -8,6 +8,7 @@ import com.bt.datamodel.StrategyOverview;
 import com.bt.datamodel.Trade;
 import com.bt.datamodel.TradeFactory;
 import com.bt.strategy.Nifty30;
+import com.bt.util.LinearRegression;
 
 public class ChannelBreakOut extends Nifty30 {
 	
@@ -16,6 +17,7 @@ public class ChannelBreakOut extends Nifty30 {
 	{
 		int PERIOD = 12;
 		int STOPLOSS = 65;
+		double slope = 0;
 		LinkedList<CandleStickData> fast = new LinkedList<>();
 		LinkedList<Float> dayClose = new LinkedList<>();
 		StrategyOverview overview = new StrategyOverview();
@@ -26,6 +28,22 @@ public class ChannelBreakOut extends Nifty30 {
 			if( ohlc.getHour() == 15 && ohlc.getMinute() == 29)
 			{
 				dayClose.add(ohlc.getmClose());
+				if ( dayClose.size() > 40)
+				{
+					List<Float> subList = dayClose.subList(dayClose.size()-40, dayClose.size());
+					double[] x = new double[subList.size()];
+					double[] y = new double[subList.size()];
+					int index = 0;
+					for (float val : subList) {
+						x[index] = index;
+						y[index] = val;
+						index++;
+					}
+					LinearRegression lr = new LinearRegression(x, y);
+					slope = lr.slope();
+					System.out.println(slope);
+//					STOPLOSS = Math.round(ohlc.getmClose()*1/100);
+				}
 			}
 
 			if (fast.size() < PERIOD) {
@@ -71,7 +89,10 @@ public class ChannelBreakOut extends Nifty30 {
 					{
 						tradeValue = ohlc.getmOpen();
 					}
-					currentTrade =  TradeFactory.getShortTrade(tradeValue, ohlc.getTs());
+					if ( slope < 3)
+					{
+						currentTrade =  TradeFactory.getShortTrade(tradeValue, ohlc.getTs());
+					}
 					System.out.println("SHORT,"+ tradeValue+","+ohlc.getTs() );
 //					STOPLOSS = (int) Math.round(tradeValue*0.85/100);
 				}
