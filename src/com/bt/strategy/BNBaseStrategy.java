@@ -1,9 +1,6 @@
 package com.bt.strategy;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,22 +42,22 @@ public class BNBaseStrategy {
 	protected void initData() {
 		final String dir = System.getProperty("user.dir");
 		String[] years = getYears();
+		String seperator = File.separator;
 //		String[] years = {  "2016"};
 //		String[] years = {"Test"};
 		for (String year : years) {
-			parseCSVNew(dir+"\\BankNiftyData\\"+year+"\\AJAN\\BANKNIFTY_F1.txt");
-			parseCSVNew(dir+"\\BankNiftyData\\"+year+"\\BFEB\\BANKNIFTY_F1.txt");
-			parseCSVNew(dir+"\\BankNiftyData\\"+year+"\\CMAR\\BANKNIFTY_F1.txt");
-			parseCSVNew(dir+"\\BankNiftyData\\"+year+"\\DAPR\\BANKNIFTY_F1.txt");
-			parseCSVNew(dir+"\\BankNiftyData\\"+year+"\\EMAY\\BANKNIFTY_F1.txt");
-			parseCSVNew(dir+"\\BankNiftyData\\"+year+"\\FJUN\\BANKNIFTY_F1.txt");
-			parseCSVNew(dir+"\\BankNiftyData\\"+year+"\\GJUL\\BANKNIFTY_F1.txt");
-			parseCSVNew(dir+"\\BankNiftyData\\"+year+"\\HAUG\\BANKNIFTY_F1.txt");
-			parseCSVNew(dir+"\\BankNiftyData\\"+year+"\\ISEP\\BANKNIFTY_F1.txt");
-			parseCSVNew(dir+"\\BankNiftyData\\"+year+"\\JOCT\\BANKNIFTY_F1.txt");
-			parseCSVNew(dir+"\\BankNiftyData\\"+year+"\\KNOV\\BANKNIFTY_F1.txt");
-			parseCSVNew(dir+"\\BankNiftyData\\"+year+"\\LDEC\\BANKNIFTY_F1.txt");
-			
+			parseCSVNew(dir+seperator+"BankNiftyData"+seperator+year+seperator+"AJAN"+seperator+"BANKNIFTY_F1.txt");
+			parseCSVNew(dir+seperator+"BankNiftyData"+seperator+year+seperator+"BJAN"+seperator+"BANKNIFTY_F1.txt");
+			parseCSVNew(dir+seperator+"BankNiftyData"+seperator+year+seperator+"CJAN"+seperator+"BANKNIFTY_F1.txt");
+			parseCSVNew(dir+seperator+"BankNiftyData"+seperator+year+seperator+"DJAN"+seperator+"BANKNIFTY_F1.txt");
+			parseCSVNew(dir+seperator+"BankNiftyData"+seperator+year+seperator+"EJAN"+seperator+"BANKNIFTY_F1.txt");
+			parseCSVNew(dir+seperator+"BankNiftyData"+seperator+year+seperator+"FJAN"+seperator+"BANKNIFTY_F1.txt");
+			parseCSVNew(dir+seperator+"BankNiftyData"+seperator+year+seperator+"GJAN"+seperator+"BANKNIFTY_F1.txt");
+			parseCSVNew(dir+seperator+"BankNiftyData"+seperator+year+seperator+"HJAN"+seperator+"BANKNIFTY_F1.txt");
+			parseCSVNew(dir+seperator+"BankNiftyData"+seperator+year+seperator+"IJAN"+seperator+"BANKNIFTY_F1.txt");
+			parseCSVNew(dir+seperator+"BankNiftyData"+seperator+year+seperator+"JJAN"+seperator+"BANKNIFTY_F1.txt");
+			parseCSVNew(dir+seperator+"BankNiftyData"+seperator+year+seperator+"KJAN"+seperator+"BANKNIFTY_F1.txt");
+			parseCSVNew(dir+seperator+"BankNiftyData"+seperator+year+seperator+"LJAN"+seperator+"BANKNIFTY_F1.txt");
 		}
 		
 	}

@@ -1,9 +1,6 @@
 package com.bt.strategy;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,21 +16,22 @@ public class BaseStrategy {
 	protected void initData() {
 		final String dir = System.getProperty("user.dir");
 		String[] years = getYears();
+		String seperator = File.separator;
 //		String[] years = {  "2016", "2017"};
 //		String[] years = {"Test"};
 		for (String year : years) {
-			parseCSV(dir + "\\NIFTY\\"+year+"\\"+year+"JanNIFTY.csv");
-			parseCSV(dir + "\\NIFTY\\"+year+"\\"+year+"FebNIFTY.csv");
-			parseCSV(dir + "\\NIFTY\\"+year+"\\"+year+"MarNIFTY.csv");
-			parseCSV(dir + "\\NIFTY\\"+year+"\\"+year+"AprNIFTY.csv");
-			parseCSV(dir + "\\NIFTY\\"+year+"\\"+year+"MayNIFTY.csv");
-			parseCSV(dir + "\\NIFTY\\"+year+"\\"+year+"JunNIFTY.csv");
-			parseCSV(dir + "\\NIFTY\\"+year+"\\"+year+"JulNIFTY.csv");
-			parseCSV(dir + "\\NIFTY\\"+year+"\\"+year+"AugNIFTY.csv");
-			parseCSV(dir + "\\NIFTY\\"+year+"\\"+year+"SepNIFTY.csv");
-			parseCSV(dir + "\\NIFTY\\"+year+"\\"+year+"OctNIFTY.csv");
-			parseCSV(dir + "\\NIFTY\\"+year+"\\"+year+"NovNIFTY.csv");
-			parseCSV(dir + "\\NIFTY\\"+year+"\\"+year+"DecNIFTY.csv");
+			parseCSV(dir + seperator +"NIFTY"+ seperator +year+seperator+year+"JanNIFTY.csv");
+			parseCSV(dir + seperator +"NIFTY"+ seperator +year+seperator+year+"FebNIFTY.csv");
+			parseCSV(dir + seperator +"NIFTY"+ seperator +year+seperator+year+"MarNIFTY.csv");
+			parseCSV(dir + seperator +"NIFTY"+ seperator +year+seperator+year+"AprNIFTY.csv");
+			parseCSV(dir + seperator +"NIFTY"+ seperator +year+seperator+year+"MayNIFTY.csv");
+			parseCSV(dir + seperator +"NIFTY"+ seperator +year+seperator+year+"JunNIFTY.csv");
+			parseCSV(dir + seperator +"NIFTY"+ seperator +year+seperator+year+"JulNIFTY.csv");
+			parseCSV(dir + seperator +"NIFTY"+ seperator +year+seperator+year+"AugNIFTY.csv");
+			parseCSV(dir + seperator +"NIFTY"+ seperator +year+seperator+year+"SepNIFTY.csv");
+			parseCSV(dir + seperator +"NIFTY"+ seperator +year+seperator+year+"OctNIFTY.csv");
+			parseCSV(dir + seperator +"NIFTY"+ seperator +year+seperator+year+"NovNIFTY.csv");
+			parseCSV(dir + seperator +"NIFTY"+ seperator +year+seperator+year+"DecNIFTY.csv");
 		}
 		
 	}
