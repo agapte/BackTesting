@@ -76,19 +76,38 @@ public class BNIntraDayStrategy extends BankNifty30 {
 				float low = candleStickData.getmLow();
 				float open = candleStickData.getmOpen();
 				String ts = candleStickData.getTs();
-				float stopLoss = 0.4f/100f*low;
-				stopLoss = Math.round(stopLoss);
-//				stopLoss = 80;
-				float positiveDelta = Math.round(0.5f/100f*low);
-				float negativeDelta = Math.round(0.7f/100f*low);
-				
-								
+
+				// Default combination, Low drawdown, Best consistency
+				float stopLoss = Math.round(0.4f/100f*low);   // Try 0.3 also
+                float positiveDelta = 70;
+                float negativeDelta = 90;
+                int timeCutOffInMinutesInMultipleOfTen = 11*10;
+
+//                // Best returns with static values
+//                stopLoss = Math.round(0.3f/100f*low); // Try 0.4 also
+//                positiveDelta = 60;
+//                negativeDelta = 90;
+//                timeCutOffInMinutesInMultipleOfTen = 11*10;
+
+//                // Best profit per trade, Least Drawdown, Least number of trades
+//                stopLoss = Math.round(0.3f/100f*low);  // Try 0.4 also
+//                positiveDelta = Math.round(0.6f/100f*low);
+//                negativeDelta = Math.round(0.7f/100f*low);
+//                timeCutOffInMinutesInMultipleOfTen = 6*10;
+
+//                // Best Possible combination
+//                stopLoss = Math.round(0.3f/100f*low); // Try 0.4 also
+//                positiveDelta = Math.round((channelMax-channelMin)*0.3f);
+//                negativeDelta = Math.round((channelMax-channelMin)*0.6f);
+//                timeCutOffInMinutesInMultipleOfTen = 11*10;
+
+
 				if( index ==0)
 				{
 					index++;
 					continue;
 				}
-				if ( currentTrade == null && index < 6 && tradeCount < 1 )
+				if ( currentTrade == null && index < timeCutOffInMinutesInMultipleOfTen/10 && tradeCount < 1 )
 				{
 					if ( high > channelMax + positiveDelta)
 					{
