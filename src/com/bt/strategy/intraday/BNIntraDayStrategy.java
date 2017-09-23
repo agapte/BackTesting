@@ -2,6 +2,7 @@ package com.bt.strategy.intraday;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -11,6 +12,7 @@ import com.bt.datamodel.StrategyOverview;
 import com.bt.datamodel.Trade;
 import com.bt.datamodel.TradeFactory;
 import com.bt.strategy.BankNifty30;
+import com.bt.util.LinearRegression;
 
 public class BNIntraDayStrategy extends BankNifty30 {
 	
@@ -39,14 +41,9 @@ public class BNIntraDayStrategy extends BankNifty30 {
 		for (Entry<String, List<CandleStickData>> entry : entrySet) {
 			
 			String dateString = entry.getKey();
-			if( dateString.contains("01-03-2017"))
-			{
-				System.out.println("Break here");
-			}
 			dateString.trim();
 			List<CandleStickData> candleStickDataList = entry.getValue();
 			List<CandleStickData> intraDayList = new ArrayList<CandleStickData>(candleStickDataList);
-			
 			int index = 0;
 			int tradeCount = 0;
 			for (CandleStickData candleStickData : intraDayList) {
@@ -79,21 +76,24 @@ public class BNIntraDayStrategy extends BankNifty30 {
 				float low = candleStickData.getmLow();
 				float open = candleStickData.getmOpen();
 				String ts = candleStickData.getTs();
-				float stopLoss = 0.35f/100f*low;
+				float stopLoss = 0.4f/100f*low;
 				stopLoss = Math.round(stopLoss);
-				stopLoss = 100;
+//				stopLoss = 80;
+				float positiveDelta = Math.round(0.5f/100f*low);
+				float negativeDelta = Math.round(0.7f/100f*low);
+				
 								
 				if( index ==0)
 				{
 					index++;
 					continue;
 				}
-				if ( currentTrade == null && index < 11 && tradeCount < 1 )
+				if ( currentTrade == null && index < 6 && tradeCount < 1 )
 				{
-					if ( high > channelMax + 130)
+					if ( high > channelMax + positiveDelta)
 					{
-						float price = channelMax + 130;
-						if( open > channelMax + 130)
+						float price = channelMax + positiveDelta;
+						if( open > channelMax + positiveDelta)
 						{
 							price = open;
 						}
@@ -101,10 +101,10 @@ public class BNIntraDayStrategy extends BankNifty30 {
 						tradeCount++;
 						
 					} 
-					else if (low < channelMin-120)
+					else if (low < channelMin-negativeDelta )
 					{
-						float price = channelMin - 120;
-						if( open < channelMin - 120)
+						float price = channelMin - negativeDelta;
+						if( open < channelMin - negativeDelta)
 						{
 							price = open;
 						}
