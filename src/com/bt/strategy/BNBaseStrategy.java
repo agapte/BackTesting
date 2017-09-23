@@ -47,17 +47,17 @@ public class BNBaseStrategy {
 //		String[] years = {"Test"};
 		for (String year : years) {
 			parseCSVNew(dir+seperator+"BankNiftyData"+seperator+year+seperator+"AJAN"+seperator+"BANKNIFTY_F1.txt");
-			parseCSVNew(dir+seperator+"BankNiftyData"+seperator+year+seperator+"BJAN"+seperator+"BANKNIFTY_F1.txt");
-			parseCSVNew(dir+seperator+"BankNiftyData"+seperator+year+seperator+"CJAN"+seperator+"BANKNIFTY_F1.txt");
-			parseCSVNew(dir+seperator+"BankNiftyData"+seperator+year+seperator+"DJAN"+seperator+"BANKNIFTY_F1.txt");
-			parseCSVNew(dir+seperator+"BankNiftyData"+seperator+year+seperator+"EJAN"+seperator+"BANKNIFTY_F1.txt");
-			parseCSVNew(dir+seperator+"BankNiftyData"+seperator+year+seperator+"FJAN"+seperator+"BANKNIFTY_F1.txt");
-			parseCSVNew(dir+seperator+"BankNiftyData"+seperator+year+seperator+"GJAN"+seperator+"BANKNIFTY_F1.txt");
-			parseCSVNew(dir+seperator+"BankNiftyData"+seperator+year+seperator+"HJAN"+seperator+"BANKNIFTY_F1.txt");
-			parseCSVNew(dir+seperator+"BankNiftyData"+seperator+year+seperator+"IJAN"+seperator+"BANKNIFTY_F1.txt");
-			parseCSVNew(dir+seperator+"BankNiftyData"+seperator+year+seperator+"JJAN"+seperator+"BANKNIFTY_F1.txt");
-			parseCSVNew(dir+seperator+"BankNiftyData"+seperator+year+seperator+"KJAN"+seperator+"BANKNIFTY_F1.txt");
-			parseCSVNew(dir+seperator+"BankNiftyData"+seperator+year+seperator+"LJAN"+seperator+"BANKNIFTY_F1.txt");
+			parseCSVNew(dir+seperator+"BankNiftyData"+seperator+year+seperator+"BFEB"+seperator+"BANKNIFTY_F1.txt");
+			parseCSVNew(dir+seperator+"BankNiftyData"+seperator+year+seperator+"CMAR"+seperator+"BANKNIFTY_F1.txt");
+			parseCSVNew(dir+seperator+"BankNiftyData"+seperator+year+seperator+"DAPR"+seperator+"BANKNIFTY_F1.txt");
+			parseCSVNew(dir+seperator+"BankNiftyData"+seperator+year+seperator+"EMAY"+seperator+"BANKNIFTY_F1.txt");
+			parseCSVNew(dir+seperator+"BankNiftyData"+seperator+year+seperator+"FJUN"+seperator+"BANKNIFTY_F1.txt");
+			parseCSVNew(dir+seperator+"BankNiftyData"+seperator+year+seperator+"GJUL"+seperator+"BANKNIFTY_F1.txt");
+			parseCSVNew(dir+seperator+"BankNiftyData"+seperator+year+seperator+"HAUG"+seperator+"BANKNIFTY_F1.txt");
+			parseCSVNew(dir+seperator+"BankNiftyData"+seperator+year+seperator+"ISEP"+seperator+"BANKNIFTY_F1.txt");
+			parseCSVNew(dir+seperator+"BankNiftyData"+seperator+year+seperator+"JOCT"+seperator+"BANKNIFTY_F1.txt");
+			parseCSVNew(dir+seperator+"BankNiftyData"+seperator+year+seperator+"KNOV"+seperator+"BANKNIFTY_F1.txt");
+			parseCSVNew(dir+seperator+"BankNiftyData"+seperator+year+seperator+"LDEC"+seperator+"BANKNIFTY_F1.txt");
 		}
 		
 	}
@@ -127,7 +127,7 @@ public class BNBaseStrategy {
 			}
 
 		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
+			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
