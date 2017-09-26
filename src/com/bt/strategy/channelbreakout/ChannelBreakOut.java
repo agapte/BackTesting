@@ -42,7 +42,7 @@ public class ChannelBreakOut extends Nifty30 {
 					LinearRegression lr = new LinearRegression(x, y);
 					slope = lr.slope();
 					System.out.println(slope);
-//					STOPLOSS = Math.round(ohlc.getmClose()*1/100);
+					STOPLOSS = Math.round(ohlc.getmClose()*1f/100);
 				}
 			}
 
