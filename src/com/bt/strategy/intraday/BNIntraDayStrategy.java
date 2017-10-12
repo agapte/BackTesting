@@ -101,7 +101,6 @@ public class BNIntraDayStrategy extends BankNifty30 {
 //                negativeDelta = Math.round((channelMax-channelMin)*0.6f);
 //                timeCutOffInMinutesInMultipleOfTen = 11*10;
 
-
 				if( index ==0)
 				{
 					index++;
