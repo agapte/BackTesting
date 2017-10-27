@@ -43,7 +43,7 @@ public class IntraDayStrategy extends Nifty30 {
 			List<CandleStickData> candleStickDataList = entry.getValue();
 			List<CandleStickData> intraDayList = new ArrayList<CandleStickData>(candleStickDataList);
 			
-			List<CandleStickData> subList = null;
+			List<CandleStickData> subList = new ArrayList<>();
 			if (prevDayList != null)
 			{
 				if (prevDayList.size() < 24 ){
@@ -54,36 +54,42 @@ public class IntraDayStrategy extends Nifty30 {
 				}
 			}
 			
+			float channelMax = -1;
+			float channelMin = 99999;
+			for (CandleStickData csd : subList) {
+//				float close = csd.getmClose();
+				float high = csd.getmHigh();
+				float low = csd.getmLow();
+				if ( low < channelMin )
+				{
+					channelMin = low;
+				}
+				
+				if ( high > channelMax )
+				{
+					channelMax = high;
+				}
+			}
+			
 			
 			int index = 0;
 			int tradeCount = 0;
-//			float stopLoss = 0.35f/100f*low;
-//			float stopLoss = Math.round(stopLoss);
+//			float stopLoss = 0.7f/100f*channelMin;
+//			stopLoss = Math.round(stopLoss);
 			float stopLoss = 30;
 			float longDelta = 25;
 			float shortDelta = 20;
+//			longDelta = 0.25f/100f*channelMin;
+//			shortDelta = 0.20f/100f*channelMin;
+			
+			
 			for (CandleStickData candleStickData : intraDayList) {
 				if (prevDayList == null)
 				{
 					continue;
 				}
 				
-				float channelMax = -1;
-				float channelMin = 99999;
-				for (CandleStickData csd : subList) {
-//					float close = csd.getmClose();
-					float high = csd.getmHigh();
-					float low = csd.getmLow();
-					if ( low < channelMin )
-					{
-						channelMin = low;
-					}
-					
-					if ( high > channelMax )
-					{
-						channelMax = high;
-					}
-				}
+				
 				
 				float close = candleStickData.getmClose();
 				float high = candleStickData.getmHigh();

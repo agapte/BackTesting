@@ -16,7 +16,7 @@ public class ChannelBreakOut extends Nifty30 {
 	public void processData()
 	{
 		int PERIOD = 12;
-		int STOPLOSS = 65;
+		int STOPLOSS = 85;
 		double slope = 0;
 		LinkedList<CandleStickData> fast = new LinkedList<>();
 		LinkedList<Float> dayClose = new LinkedList<>();
