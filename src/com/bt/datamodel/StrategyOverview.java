@@ -11,7 +11,7 @@ public class StrategyOverview {
 	
 	List<Trade> tradeList = new ArrayList<>();
 	
-	ArrayList<Float> drawDownList = new ArrayList<Float>();
+	ArrayList<String> drawDownList = new ArrayList<String>();
 	
 	public StrategyOverview() {
 	}
@@ -108,7 +108,7 @@ public class StrategyOverview {
 			{
 				maxProfit = totalProfit;
 			}
-			drawDownList.add(maxProfit - totalProfit);
+			drawDownList.add(ts+"#"+(maxProfit - totalProfit));
 			if(maxDrawdown < (maxProfit - totalProfit))
 			{
 				maxDrawdown = maxProfit - totalProfit;
