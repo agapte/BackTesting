@@ -16,7 +16,7 @@ public class ChannelBreakOut extends Nifty30 {
 	public void processData()
 	{
 		int PERIOD = 12;
-		int STOPLOSS = 85;
+		int STOPLOSS = 30;
 		double slope = 0;
 		LinkedList<CandleStickData> fast = new LinkedList<>();
 		LinkedList<Float> dayClose = new LinkedList<>();
@@ -57,11 +57,11 @@ public class ChannelBreakOut extends Nifty30 {
 			int index  = 0;
 			List<CandleStickData> subFast = fast;
 			for (CandleStickData candleStickData : subFast) {
-				if( currentTrade != null && index < 0 && currentTrade.getTradeType().equals("SHORT"))
-				{
-					index++;
-					continue;
-				}
+//				if( currentTrade != null && index < 0 && currentTrade.getTradeType().equals("SHORT"))
+//				{
+//					index++;
+//					continue;
+//				}
 				float high = candleStickData.getmHigh();
 				float low = candleStickData.getmLow();
 				if (high > channelHigh) {

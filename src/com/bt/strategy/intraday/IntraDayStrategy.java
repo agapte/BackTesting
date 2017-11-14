@@ -74,9 +74,9 @@ public class IntraDayStrategy extends Nifty30 {
 			
 			int index = 0;
 			int tradeCount = 0;
-//			float stopLoss = 0.7f/100f*channelMin;
-//			stopLoss = Math.round(stopLoss);
-			float stopLoss = 30;
+			float stopLoss = 0.3f/100f*channelMin;
+			stopLoss = Math.round(stopLoss);
+			stopLoss = 30;
 			float longDelta = 25;
 			float shortDelta = 20;
 //			longDelta = 0.25f/100f*channelMin;
