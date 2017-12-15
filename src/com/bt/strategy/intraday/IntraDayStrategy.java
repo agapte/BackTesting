@@ -104,7 +104,7 @@ public class IntraDayStrategy extends Nifty30 {
 				}
 				if ( currentTrade == null && index < 6 && tradeCount < 1 )
 				{
-					if ( high > channelMax + longDelta)
+					if ( high > channelMax + longDelta && index < 4)
 					{
 						float price = channelMax + longDelta;
 						if( open > channelMax + longDelta)
@@ -115,7 +115,7 @@ public class IntraDayStrategy extends Nifty30 {
 						tradeCount++;
 						
 					} 
-					else if (low < channelMin-shortDelta)
+					else if (low < channelMin-shortDelta && index < 2)
 					{
 						float price = channelMin - shortDelta;
 						if( open < channelMin - shortDelta)
