@@ -11,6 +11,8 @@ import com.bt.datamodel.StrategyOverview;
 import com.bt.datamodel.Trade;
 import com.bt.datamodel.TradeFactory;
 import com.bt.strategy.Nifty30;
+import com.bt.util.LinearRegression;
+import com.bt.util.StatUtils;
 
 public class IntraDayStrategy extends Nifty30 {
 	
@@ -33,6 +35,7 @@ public class IntraDayStrategy extends Nifty30 {
 		createIntraDayMap();
 		StrategyOverview overview = new StrategyOverview();
 		Trade currentTrade = null;
+		LinearRegression lr = null;
 		Set<Entry<String, List<CandleStickData>>> entrySet = intraDayMap.entrySet();
 		List<CandleStickData> prevDayList = null;
 		for (Entry<String, List<CandleStickData>> entry : entrySet) {
@@ -44,6 +47,7 @@ public class IntraDayStrategy extends Nifty30 {
 			List<CandleStickData> intraDayList = new ArrayList<CandleStickData>(candleStickDataList);
 			
 			List<CandleStickData> subList = new ArrayList<>();
+			List<CandleStickData> currentDayList = new ArrayList<>();
 			if (prevDayList != null)
 			{
 				if (prevDayList.size() < 24 ){
@@ -52,6 +56,7 @@ public class IntraDayStrategy extends Nifty30 {
 				} else {
 					subList = new ArrayList<CandleStickData>(prevDayList.subList(prevDayList.size()-24, prevDayList.size()));
 				}
+				lr = StatUtils.getLinearRegression(prevDayList);
 			}
 			
 			float channelMax = -1;
@@ -74,22 +79,20 @@ public class IntraDayStrategy extends Nifty30 {
 			
 			int index = 0;
 			int tradeCount = 0;
-			float stopLoss = 0.3f/100f*channelMin;
+			float stopLoss = 0.4f/100f*channelMin;
 			stopLoss = Math.round(stopLoss);
-			stopLoss = 30;
-			float longDelta = 25;
+//			stopLoss = 30;
+			float longDelta = 30;
 			float shortDelta = 20;
 //			longDelta = 0.25f/100f*channelMin;
-//			shortDelta = 0.20f/100f*channelMin;
-			
+			shortDelta = 0.25f/100f*channelMin;
 			
 			for (CandleStickData candleStickData : intraDayList) {
+				currentDayList.add(candleStickData);
 				if (prevDayList == null)
 				{
 					continue;
 				}
-				
-				
 				
 				float close = candleStickData.getmClose();
 				float high = candleStickData.getmHigh();
@@ -104,7 +107,18 @@ public class IntraDayStrategy extends Nifty30 {
 				}
 				if ( currentTrade == null && index < 6 && tradeCount < 1 )
 				{
-					if ( high > channelMax + longDelta && index < 4)
+//					float tradePrice = canGoLong(prevDayList, currentDayList, channelMax, index);
+//					if( tradePrice > 0)
+//					{
+//						if( open > tradePrice)
+//						{
+//							tradePrice = open;
+//						}
+//						currentTrade = TradeFactory.getLongTrade(tradePrice, ts);
+//						tradeCount++;
+//					}
+					
+					if ( lr.slope() > 0 && lr.R2() > 0.5 && high > channelMax + longDelta && index < 4)
 					{
 						float price = channelMax + longDelta;
 						if( open > channelMax + longDelta)
@@ -177,6 +191,10 @@ public class IntraDayStrategy extends Nifty30 {
 		System.out.println(overview.toString());
 //		System.out.println( jsonData);
 		
+	}
+
+	private float canGoLong(List<CandleStickData> currentDayList, List<CandleStickData> prevDayList, float channelMax, int index) {
+		return 0;
 	}
 
 	private void createIntraDayMap() {
