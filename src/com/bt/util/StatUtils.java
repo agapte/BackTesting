@@ -1,6 +1,7 @@
 package com.bt.util;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import com.bt.datamodel.CandleStickData;
 
@@ -62,6 +63,19 @@ public class StatUtils {
 		}
 		float exit = Math.round(max - 3*atr);
 		return exit;
+	}
+
+	public static LinearRegression getLinearRegression(List<CandleStickData> candleStickDataList) {
+		double[] x = new double[candleStickDataList.size()];
+		double[] y = new double[candleStickDataList.size()];
+		int index = 0;
+		for (CandleStickData candle : candleStickDataList) {
+			x[index] = index;
+			y[index] = candle.getmClose();
+			index++;
+		}
+		LinearRegression lr = new LinearRegression(x, y);
+		return lr;
 	}
 
 }
