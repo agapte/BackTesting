@@ -38,7 +38,7 @@ public class BaseStrategy {
 	
 	protected String[] getYears() {
 		// TODO Auto-generated method stub
-		return new String[]{"2013","2014", "2015", "2016", "2017"};
+		return new String[]{"2013","2014", "2015", "2016", "2017", "2018"};
 	}
 
 	protected void initBankNiftyData() {
@@ -144,7 +144,7 @@ public class BaseStrategy {
 	
 	private void parseCSV(String fileName)
 	{
-		if(fileName.contains("2016") || fileName.contains("2017") )
+		if(fileName.contains("2016") || fileName.contains("2017") || fileName.contains("2018"))
 		{
 			parseCSVNew(fileName);
 			return;

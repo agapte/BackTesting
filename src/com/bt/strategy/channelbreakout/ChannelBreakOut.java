@@ -12,6 +12,11 @@ import com.bt.util.LinearRegression;
 
 public class ChannelBreakOut extends Nifty30 {
 	
+	@Override
+	protected String[] getYears() {
+		return new String[]{ "2017", "2018"};
+	}
+	
 	int direction = 0;
 	public void processData()
 	{
