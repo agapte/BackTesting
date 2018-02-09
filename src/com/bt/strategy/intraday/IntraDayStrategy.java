@@ -20,8 +20,8 @@ public class IntraDayStrategy extends Nifty30 {
 	
 	@Override
 	protected String[] getYears() {
-//		return new String[]{"2013","2014","2015","2016", "2017", "2018"};
-		return new String[]{"2018"};
+		return new String[]{"2013","2014","2015","2016", "2017", "2018"};
+//		return new String[]{"2018"};
 	}
 	
 	public static void main(String[] args) {
@@ -31,7 +31,7 @@ public class IntraDayStrategy extends Nifty30 {
 		strategy.processData();
 	}
 
-	private void processData() {
+	public StrategyOverview processData() {
 		createIntraDayMap();
 		StrategyOverview overview = new StrategyOverview();
 		Trade currentTrade = null;
@@ -190,6 +190,7 @@ public class IntraDayStrategy extends Nifty30 {
 		
 		System.out.println(overview.toString());
 //		System.out.println( jsonData);
+		return overview;
 		
 	}
 

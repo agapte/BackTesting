@@ -32,7 +32,7 @@ public class BNIntraDayStrategy extends BankNifty30 {
 		strategy.processData();
 	}
 
-	private void processData() {
+	public StrategyOverview processData() {
 		createIntraDayMap();
 		StrategyOverview overview = new StrategyOverview();
 		Trade currentTrade = null;
@@ -178,7 +178,7 @@ public class BNIntraDayStrategy extends BankNifty30 {
 		
 		System.out.println(overview.toString());
 //		System.out.println( jsonData);
-		
+		return overview;
 	}
 
 	private void createIntraDayMap() {
