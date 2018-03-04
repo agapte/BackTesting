@@ -369,5 +369,9 @@ public class StrategyOverview {
 		stringBuffer.append(drawDownList);
 		return stringBuffer.toString();
 	}
+	
+	public List<Trade> getTradeList() {
+		return tradeList;
+	}
 
 }
