@@ -20,8 +20,8 @@ public class IntraDayStrategy extends Nifty30 {
 	
 	@Override
 	protected String[] getYears() {
-//		return new String[]{"2013","2014","2015","2016", "2017", "2018"};
-		return new String[]{"2018"};
+		return new String[]{"2013","2014","2015","2016", "2017", "2018"};
+//		return new String[]{"2018"};
 	}
 	
 	public static void main(String[] args) {
