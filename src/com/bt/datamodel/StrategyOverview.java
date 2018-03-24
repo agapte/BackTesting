@@ -2,6 +2,7 @@ package com.bt.datamodel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -260,27 +261,118 @@ public class StrategyOverview {
 		}
 	}
 	
-	public void getYearWiseProfit()
+	public void getFinYearWiseProfit()
 	{
-		Map<String, Float> profitMap = new HashMap<String, Float>();
+		Map<String, Float> profitMap = new LinkedHashMap<String, Float>();
+		profitMap.put("2012_2013", 0f);
+		profitMap.put("2013_2014", 0f);
+		profitMap.put("2014_2015", 0f);
+		profitMap.put("2015_2016", 0f);
+		profitMap.put("2016_2017", 0f);
+		profitMap.put("2017_2018", 0f);
 		for (Trade trade : tradeList) {
 			String ts = trade.getSellTs();
 			if(trade.getTradeType().equals("SHORT"))
 			{
 				ts = trade.getBuyTs();
 			}
-			String substring = ts.substring(6, 10);
-			if(substring.equals("13_1"))
+			int year = Integer.parseInt( ts.substring(6, 10));
+			int month = Integer.parseInt( ts.substring(3, 5));
+//			if(yearString.equals("13_1"))
+//			{
+//				System.out.println(ts);
+//			}
+			
+			String yearString =  Integer.toString(year)+ "_"+ Integer.toString(year+1);
+			if ( month < 4)
 			{
-				System.out.println(ts);
+				yearString = Integer.toString(year-1)+"_"+Integer.toString(year);
 			}
-			Float float1 = profitMap.get(substring);
+			
+			Float float1 = profitMap.get(yearString);
 			if( float1 == null)
 			{
 				float1 = (float) 0;
 			}
 			float1 += trade.getProfit();
-			profitMap.put(substring, float1);
+			profitMap.put(yearString, float1);
+		}
+		System.out.println(profitMap);
+	}
+	
+	public void getYearWiseProfit()
+	{
+		Map<String, Float> profitMap = new LinkedHashMap<String, Float>();
+//		profitMap.put("2012_2013", 0f);
+//		profitMap.put("2013_2014", 0f);
+//		profitMap.put("2014_2015", 0f);
+//		profitMap.put("2015_2016", 0f);
+//		profitMap.put("2016_2017", 0f);
+//		profitMap.put("2017_2018", 0f);
+		for (Trade trade : tradeList) {
+			String ts = trade.getSellTs();
+			if(trade.getTradeType().equals("SHORT"))
+			{
+				ts = trade.getBuyTs();
+			}
+			int year = Integer.parseInt( ts.substring(6, 10));
+			int month = Integer.parseInt( ts.substring(3, 5));
+//			if(yearString.equals("13_1"))
+//			{
+//				System.out.println(ts);
+//			}
+			
+			String yearString =  Integer.toString(year);
+			
+			Float float1 = profitMap.get(yearString);
+			if( float1 == null)
+			{
+				float1 = (float) 0;
+			}
+			float1 += trade.getProfit();
+			profitMap.put(yearString, float1);
+		}
+		System.out.println(profitMap);
+	}
+	
+	public void getQuarterlyProfit()
+	{
+		Map<String, Float> profitMap = new LinkedHashMap<String, Float>();
+		for (Trade trade : tradeList) {
+			String ts = trade.getSellTs();
+			if(trade.getTradeType().equals("SHORT"))
+			{
+				ts = trade.getBuyTs();
+			}
+			int year = Integer.parseInt( ts.substring(6, 10));
+			int month = Integer.parseInt( ts.substring(3, 5));
+//			if(yearString.equals("13_1"))
+//			{
+//				System.out.println(ts);
+//			}
+			
+			int quarter = 1;
+			if ( month < 4)
+			{
+				quarter = 1;
+			} else if (month < 7) {
+				quarter = 2;
+			}else if (month < 10) {
+				quarter = 3;
+				
+			}else if (month < 13) {
+				quarter = 4;
+			}
+			
+			String yearString =  Integer.toString(quarter) + "_"+ Integer.toString(year);
+			
+			Float float1 = profitMap.get(yearString);
+			if( float1 == null)
+			{
+				float1 = (float) 0;
+			}
+			float1 += trade.getProfit();
+			profitMap.put(yearString, float1);
 		}
 		System.out.println(profitMap);
 	}
@@ -344,6 +436,8 @@ public class StrategyOverview {
 		}
 		this.getMonthlyProfits();
 		this.getYearWiseProfit();
+		this.getFinYearWiseProfit();
+		this.getQuarterlyProfit();
 		StringBuffer stringBuffer = new StringBuffer();
 		stringBuffer.append("\nTotal profit         " + getTotalProfit());
 		stringBuffer.append("\nTotal trades         " + getTotalTrades());

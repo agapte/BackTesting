@@ -2,6 +2,7 @@ package com.bt.strategy.intraday;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -20,7 +21,7 @@ public class IntraDayStrategy extends Nifty30 {
 	
 	@Override
 	protected String[] getYears() {
-		return new String[]{"2013","2014","2015","2016", "2017", "2018"};
+		return new String[]{ "2017", "2018"};
 //		return new String[]{"2018"};
 	}
 	
@@ -37,7 +38,7 @@ public class IntraDayStrategy extends Nifty30 {
 		Trade currentTrade = null;
 		LinearRegression lr = null;
 		Set<Entry<String, List<CandleStickData>>> entrySet = intraDayMap.entrySet();
-		List<CandleStickData> prevDayList = null;
+		LinkedList<CandleStickData> prevDayList = null;
 		for (Entry<String, List<CandleStickData>> entry : entrySet) {
 			
 			String dateString = entry.getKey();
@@ -57,6 +58,7 @@ public class IntraDayStrategy extends Nifty30 {
 					subList = new ArrayList<CandleStickData>(prevDayList.subList(prevDayList.size()-24, prevDayList.size()));
 				}
 				lr = StatUtils.getLinearRegression(prevDayList);
+				StatUtils.getATR(prevDayList);
 			}
 			
 			float channelMax = -1;
@@ -84,7 +86,7 @@ public class IntraDayStrategy extends Nifty30 {
 //			stopLoss = 30;
 			float longDelta = 30;
 			float shortDelta = 20;
-//			longDelta = 0.25f/100f*channelMin;
+//			longDelta = 0.4f/100f*channelMin;
 			shortDelta = 0.25f/100f*channelMin;
 			
 			for (CandleStickData candleStickData : intraDayList) {
@@ -124,7 +126,9 @@ public class IntraDayStrategy extends Nifty30 {
 						if( open > channelMax + longDelta)
 						{
 							price = open;
+//							stopLoss = stopLoss/2;
 						}
+
 						currentTrade = TradeFactory.getLongTrade(price, ts);
 						tradeCount++;
 						
@@ -135,6 +139,7 @@ public class IntraDayStrategy extends Nifty30 {
 						if( open < channelMin - shortDelta)
 						{
 							price = open;
+//							stopLoss = stopLoss/2;
 						}
 						currentTrade = TradeFactory.getShortTrade(price, ts);
 						tradeCount++;
@@ -184,7 +189,7 @@ public class IntraDayStrategy extends Nifty30 {
 				}
 			}
 			
-			prevDayList = candleStickDataList;
+			prevDayList = new LinkedList<CandleStickData>(candleStickDataList);
 			
 		}
 		
