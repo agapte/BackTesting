@@ -10,10 +10,19 @@ public abstract class  Trade {
 	String sellTs = "";
 	public static int SLIPPAGE = 5;
 	
+	float putSellPrice = -1;
+	float putBuyPrice = -1;
+	float callSellPrice = -1;
+	float callBuyPrice = -1;
+	
 	public Trade() {
 	}
 	
 	public abstract void closeTrade(float price, String ts);
+	
+	public void closeTrade(float putPrice, float callPrice , String ts) {
+		
+	}
 
 	public String getTradeType() {
 		return tradeType;
@@ -99,6 +108,11 @@ public abstract class  Trade {
 			return close-buyPrice;
 		} 
 		return sellPrice - close;
+	}
+	
+	public String toString()
+	{
+		return getTradeType() + "," +getBuyTs() + "," +getSellTs() + "," +getSellTs() + "," +getBuyPrice() + "," +getSellPrice() + "," +getProfit();
 	}
 	
 }

@@ -11,5 +11,10 @@ public class TradeFactory {
 	{
 		return new ShortTrade(price, ts);
 	}
+	
+	public static Trade getPPlusCTrade(float putPrice, float callPrice, String ts)
+	{
+		return new PPlusCTrade(putPrice, callPrice, ts);
+	}
 
 }

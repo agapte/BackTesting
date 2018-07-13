@@ -409,13 +409,7 @@ public class StrategyOverview {
 		int consProfCount = 0;
 		int maxConsProfCount = 0;
 		for (Trade trade : tradeList) {
-			System.out.print(trade.getTradeType());
-			System.out.print("," +trade.getBuyTs());
-			System.out.print("," +trade.getSellTs());
-			System.out.print("," +trade.getBuyPrice());
-			System.out.print("," + trade.getSellPrice());
-			System.out.print("," + trade.getProfit());
-			System.out.println();
+			System.out.println(trade.toString());
 			if( trade.getProfit() > 0)
 			{
 				consProfCount++;
@@ -434,10 +428,10 @@ public class StrategyOverview {
 				consProfCount = 0;
 			}
 		}
-		this.getMonthlyProfits();
-		this.getYearWiseProfit();
-		this.getFinYearWiseProfit();
-		this.getQuarterlyProfit();
+//		this.getMonthlyProfits();
+//		this.getYearWiseProfit();
+//		this.getFinYearWiseProfit();
+//		this.getQuarterlyProfit();
 		StringBuffer stringBuffer = new StringBuffer();
 		stringBuffer.append("\nTotal profit         " + getTotalProfit());
 		stringBuffer.append("\nTotal trades         " + getTotalTrades());

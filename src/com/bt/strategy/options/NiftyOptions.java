@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +13,8 @@ import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import com.bt.datamodel.CandleStickData;
+import com.bt.datamodel.StrategyOverview;
+import com.bt.datamodel.Trade;
 
 public class NiftyOptions {
 	
@@ -19,10 +22,10 @@ public class NiftyOptions {
 	private static List<String> monthsValues = Arrays.asList(new String[] {"JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"});
 	private static String[] monthsIndex = new String[] {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
 	private static String[] years = new String[] {"15"};
-	private static String[] months = new String[] {"Jan"};
+	private static String[] months = new String[] {"Jan","Feb", "Mar", "Apr", "May", "Jun", "Jul"};
 	TreeMap<String, TreeMap<String, TreeMap<Integer, Map<String, CandleStickData>>>> cachedData = new TreeMap<>();
 	
-	public NiftyOptions() throws IOException {
+	public NiftyOptions() throws IOException, ParseException {
 		readData();
 	}
 	
@@ -30,10 +33,14 @@ public class NiftyOptions {
 		NiftyOptions niftyOptions = new NiftyOptions();
 	}
 
-	private void readData() throws IOException  {
+	private void readData() throws IOException, ParseException  {
+		float totalProfit = 0;
 		for (String year : years) {
+			float yearProfit = 0;
 			String path = "/Users/amit.apte/personal/BackTesting/NIFTY_OPTIONS/20"+year;// use your path
 			for (String month : months) {
+				float monthProfit = 0;
+				cachedData.clear();
 //				time , strikePrice, expiry, type
 				
 				String filepath = path + "/"+month+"_20"+year+".csv";
@@ -135,15 +142,26 @@ public class NiftyOptions {
 //					}
 //				}
 				
+				StrategyOverview strategyOverview = new StrategyOverview();
+				Trade.SLIPPAGE = 0;
 				for (Entry<String,TreeMap<String,TreeMap<Integer,Map<String,CandleStickData>>>>  dateMapEntry : cachedData.entrySet()) {
 					String date = dateMapEntry.getKey();
 					TreeMap<String, TreeMap<Integer, Map<String, CandleStickData>>> dateData = dateMapEntry.getValue();
 					DayTrader dayTrader = new DayTrader(date, dateData);
+					float profit = dayTrader.trade(strategyOverview, null, null);
+					monthProfit += profit;
+					totalProfit += profit;
 				}
+//				System.out.println(strategyOverview);
 				bufferedReader.close();
+				System.out.println("Month Profit " + monthProfit);
 			}
 			
+			
+			
 		}
+		
+		System.out.println("Total Profit " + totalProfit);
 		
 		
 	}
